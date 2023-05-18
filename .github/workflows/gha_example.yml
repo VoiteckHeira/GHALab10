@@ -1,0 +1,43 @@
+name: gha_example:GitHub Action exercise 
+
+# Szablon workflow: Miejsca oznaczone "#" naley uzupełnić 
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches: [ main ]
+
+jobs:
+  build:
+    # Definicja systemu do instalacji na wźle roboczym 
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      # Instalacja środowiska Docker + Buildx
+      - name: Buildx set-up
+        uses: #########################
+        
+      # Instalacja QEMU
+      - name: Docker Setup QEMU
+        uses: ##########################
+
+      # Logowanie do Dockerhub-a
+      - name: Login to DockerHub
+        uses: #############################
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+
+      # Budowa obrazu dla dwóch architektur sprzętowych 
+      # oraz przesłanie do własnego repo na Dockerhub
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/arm64/v8,linux/amd64 
+          context: #############################
+          file: ################################
+          push: ################################
+          tags: |
+            ##################################### 
+      
