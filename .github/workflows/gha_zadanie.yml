@@ -24,6 +24,14 @@ jobs:
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v2
 
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       # Logowanie do Dockerhub-a
       - name: Login to DockerHub
         uses: docker/login-action@v2
@@ -42,9 +50,22 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
-          cache-from: type=registry,ref=gha_lab10:zadv1
-          cache-to: type=registry,ref=gha_lab10:zadv1,mode=max
-        # tags: |
-        #   ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
-        # cache-from: type=gha
-        # cache-to: type=gha,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+        #  tags: |
+        #    ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
+        #  cache-from: type=registry,ref=gha_lab10:zadv1
+        #  cache-to: type=registry,ref=gha_lab10:zadv1,mode=max
+        #  tags: |
+        #    ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
+        #  cache-from: type=gha
+        #  cache-to: type=gha,mode=max
+
+        # Temp fix
+        # https://github.com/docker/build-push-action/issues/252
+        # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
