@@ -1,4 +1,4 @@
-name: gha_example:GitHub Action exercise
+name: gha_zad:GitHub Action Zadanie 1
 
 on:
   workflow_dispatch:
