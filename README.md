@@ -1,22 +1,28 @@
-# Laboratorium
+# Laboratorium 10
 
 GitHub Actions - przeglad podstawowych rozwiazan
 
 Uruchamianym plikiem jest gha_zadanie który odpala sie przy zrobieniu pusha do githuba
 
 w celu recznego uruchomienia nalezy wpisac w konsoli `gh workflow list`, znaleźć interesujący nas workflow
+
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/ed36034b-fb96-4108-bdc9-bc72cb0a96e4)
 
-wybrać np kod interesujący nas workflow i uruchomić komendą ` `
+wybrać np kod interesujący nas workflow i uruchomić komendą `gh workflow run 5028257381` 
+
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/0e6a99ec-cd8c-41ad-804f-b85c435ddd03)
 
 podgląd prac mozemy zobaczyć komendą `gh run watch`, gh cli pokaże nam workflowy i możemy wybrać który chcemy podejżeć jak pracuje.
+
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/efe808c3-a06f-43f4-b411-ffc74a6f4ddd)
+
 lub na stronie
+
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/02d4eb21-9226-4632-a0ae-d6a81aba6516)
 
 
 Widok zakończonej pracy
+
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/9114077d-bdef-43c5-a73a-25198b4460d3)
 
 ![image](https://github.com/VoiteckHeira/GHALab10/assets/91530837/2b9a1ff3-a123-474f-9dc6-39f6d642f021)
