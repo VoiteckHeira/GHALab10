@@ -1,11 +1,9 @@
 name: gha_example:GitHub Action exercise
 
-# Szablon workflow: Miejsca oznaczone "#" naley uzupełnić
-
 on:
   workflow_dispatch:
-#  push:
-#    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -13,9 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       # Instalacja środowiska Docker + Buildx
       - name: Buildx set-up
         uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: image=moby/buildkit:v0.11.0
+          buildkitd-flags: --debug
 
       # Instalacja QEMU
       - name: Docker Setup QEMU
@@ -31,11 +34,17 @@ jobs:
       # Budowa obrazu dla dwóch architektur sprzętowych
       # oraz przesłanie do własnego repo na Dockerhub
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           platforms: linux/arm64/v8,linux/amd64
-          context: /
-          file: ################################
+          context: .
+          file: ./Dockerfile_prod
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
+          cache-from: type=registry,ref=gha_lab10:zadv1
+          cache-to: type=registry,ref=gha_lab10:zadv1,mode=max
+        # tags: |
+        #   ${{ secrets.DOCKERHUB_USERNAME }}/gha_lab10:zadv1
+        # cache-from: type=gha
+        # cache-to: type=gha,mode=max
